@@ -1,0 +1,19 @@
+<section class="background card elevated arrow"
+         fxLayout="column"
+         fxLayoutAlign="start stretch">
+  <section fxLayout="row"
+           fxLayoutAlign="start center"
+           class="container">
+    <h3 fxFlex>{{upload.name}}</h3>
+    <button mat-icon-button
+            color="warn"
+            (click)="delete.emit(upload)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </section>
+  <img [src]="upload.url"
+       [alt]="upload.name"
+       [height]="height"
+       class="clickable"
+       (click)="select.emit(upload)" />
+</section>

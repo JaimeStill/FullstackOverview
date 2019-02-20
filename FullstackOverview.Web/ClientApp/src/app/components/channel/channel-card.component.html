@@ -1,0 +1,12 @@
+<section class="background card elevated clickable"
+         fxLayout="column"
+         fxLayoutAlign="start stretch"
+         [matTooltip]="channel.description"
+         (click)="view.emit(channel)">
+  <section fxLayout="row"
+           fxLayoutAlign="start center">
+    <h2 fxFlex>{{channel.name}}</h2>
+    <h2>{{channel.user.username}}</h2>
+  </section>
+  <p class="content">{{channel.description | truncate}}</p>
+</section>

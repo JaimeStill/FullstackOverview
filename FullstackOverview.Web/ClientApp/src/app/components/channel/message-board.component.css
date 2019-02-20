@@ -1,0 +1,8 @@
+section.message-board-container {
+  height: calc(100% - 140px);
+}
+
+section.message-board {
+  overflow: auto;
+  height: 100%;
+}

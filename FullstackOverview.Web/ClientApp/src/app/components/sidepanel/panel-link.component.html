@@ -1,0 +1,10 @@
+<a mat-list-item
+   [routerLink]="link"
+   routerLinkActive="active"
+   [@slide]="state"
+   [matTooltip]="label"
+   [matTooltipPosition]="tooltipPosition"
+   [matTooltipDisabled]="state !== 'thin'">
+  <mat-icon>{{icon}}</mat-icon>
+  <span [ngClass]="{'closed': state !== 'full', 'open': state === 'full'}">{{label}}</span>
+</a>

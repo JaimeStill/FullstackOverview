@@ -1,0 +1,17 @@
+mat-nav-list.mat-nav-list {
+  box-sizing: border-box;
+  height: 100%;
+  overflow-x: hidden;
+  white-space: nowrap;
+}
+
+.mat-nav-list span,
+.mat-nav-list .mat-icon {
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.mat-nav-list .mat-icon {
+  box-sizing: border-box;
+  display: inline-block;
+}

@@ -1,0 +1,47 @@
+<section fxLayout="column"
+         fxLayoutAlign="start stretch"
+         class="container message-board-container">
+  <section fxFlex
+           fxLayout="column"
+           fxLayoutAlign="start start"
+           fxLayoutGap="4px"
+           class="message-board background card"
+           #messageBoard>
+    <ng-container *ngFor="let m of messages">
+      <text-message *ngIf="!(m.isUpload)"
+                    [message]="m"
+                    [user]="user"
+                    (edit)="edit.emit($event)"
+                    (delete)="delete.emit($event)"></text-message>
+      <upload-message *ngIf="m.isUpload"
+                      [message]="m"
+                      [user]="user"
+                      [imgSize]="imgSize"
+                      (update)="update.emit()"
+                      (edit)="edit.emit($event)"
+                      (delete)="delete.emit($event)"></upload-message>
+    </ng-container>
+  </section>
+  <section fxLayout="row"
+           fxLayoutAlign="start center">
+    <mat-form-field fxFlex
+                    floatLabel="never">
+      <input matInput
+             placeholder="Message"
+             [(ngModel)]="message.value"
+             [disabled]="sending" />
+    </mat-form-field>
+    <button mat-icon-button
+            matTooltip="Upload Image"
+            (click)="selectImage()"
+            [disabled]="sending">
+      <mat-icon>image</mat-icon>
+    </button>
+    <button mat-icon-button
+            matTooltip="Send"
+            (click)="send.emit(message)"
+            [disabled]="sending">
+      <mat-icon>send</mat-icon>
+    </button>
+  </section>
+</section>

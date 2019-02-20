@@ -1,0 +1,38 @@
+<div class="mat-typography mat-app-background app-frame"
+     fxLayout="column"
+     [ngClass]="themeClass"
+     *ngIf="identity.identity$ | async as auth else loading">
+  <ng-container *ngIf="auth.user else loading">
+    <mat-toolbar class="app-toolbar"
+                 color="primary">
+      <button mat-icon-button
+              (click)="sidepanel.toggleState()"
+              class="toggle">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span fxFlex>Web App</span>
+      <button mat-button
+              (click)="viewSettings()"
+              matTooltip="Settings">
+        <mat-icon>settings</mat-icon> <span class="icon-label">{{auth.user.username}}</span>
+      </button>
+      <button mat-button
+              (click)="identity.logout()">Logout</button>
+    </mat-toolbar>
+    <div class="app-body mat-app-background"
+         fxFlex
+         fxFill
+         fxLayout="row"
+         fxLayoutAlign="start stretch">
+      <sidepanel></sidepanel>
+      <div fxFlex
+           class="app-panel">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate"
+                    color="accent"></mat-progress-bar>
+</ng-template>

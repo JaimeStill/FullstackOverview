@@ -1,0 +1,55 @@
+<mat-toolbar>
+  <span>Uploads</span>
+  <section class="toolbar-buttons"
+           [style.margin-left.px]="12">
+    <file-upload (selected)="fileChange($event)"
+                 accept="image/*"></file-upload>
+    <button mat-button
+            color="primary"
+            (click)="uploadFiles()"
+            *ngIf="formData"
+            [disabled]="uploading">Upload</button>
+    <button mat-button
+            (click)="clearFiles()"
+            *ngIf="formData"
+            [disabled]="uploading">Cancel</button>
+  </section>
+</mat-toolbar>
+<mat-progress-bar *ngIf="uploading"
+                  mode="indeterminate"
+                  color="accent"></mat-progress-bar>
+<ng-container *ngIf="formData && files">
+  <mat-toolbar>Pending Uploads</mat-toolbar>
+  <section fxLayout="row | wrap"
+           fxLayoutAlign="start start"
+           class="container">
+    <p class="background card elevated arrow"
+       [style.padding.px]="8"
+       *ngFor="let f of files">{{f.name}}</p>
+  </section>
+</ng-container>
+<mat-toolbar>
+  <span fxFlex>{{user?.username}}'s Uploads</span>
+  <span>Image Size:</span>
+  <mat-slider [value]="imgSize"
+              (input)="setImageSize($event)"
+              min="200"
+              max="500"
+              step="20"
+              thumbLabel
+              tickInterval="2"
+              [style.width.px]="240"></mat-slider>
+</mat-toolbar>
+<section *ngIf="upload.uploads$ | async as uploads">
+  <section *ngIf="uploads.length > 0"
+           fxLayout="row | wrap"
+           fxLayoutAlign="start start"
+           class="container">
+    <upload-card *ngFor="let u of uploads"
+                 [upload]="u"
+                 (delete)="deleteUpload($event)"
+                 (select)="openUpload($event)"
+                 [height]="imgSize"></upload-card>
+  </section>
+  <h3 *ngIf="!(uploads.length > 0)">You haven't uploaded any images!</h3>
+</section>

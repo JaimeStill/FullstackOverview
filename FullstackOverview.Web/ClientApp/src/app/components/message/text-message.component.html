@@ -1,0 +1,33 @@
+<section class="background card elevated arrow"
+         fxLayout="column"
+         fxLayoutAlign="start stretch"
+         [matTooltip]="message.messageDate | date:'dd MMM yyyy HH:mm:ss'">
+  <section fxLayout="row"
+           fxLayoutAlign="start center">
+    <h2 fxFlex>{{message.user.username}}</h2>
+    <button mat-icon-button
+            *ngIf="message.userId === user.userId"
+            (click)="toggleEditing()">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button
+            *ngIf="hasPermission"
+            color="warn"
+            (click)="deleteMessage()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </section>
+  <p *ngIf="!(editing)">{{message.value}}</p>
+  <section *ngIf="editing"
+           fxLayout="row"
+           fxLayoutAlign="start center"
+           [style.min-width.px]="420">
+    <mat-form-field fxFlex>
+      <input matInput
+             [(ngModel)]="update" />
+    </mat-form-field>
+    <button mat-icon-button (click)="updateMessage()">
+      <mat-icon>send</mat-icon>
+    </button>
+  </section>
+</section>

@@ -1,0 +1,17 @@
+a span.closed {
+  opacity: 0;
+  width: 0;
+  margin-left: 0;
+  margin-right: 0;
+  transition: opacity 200ms, width 200ms, margin-left 200ms, margin-right 200ms;
+  transition-timing-function: ease-out;
+}
+
+a span.open {
+  opacity: 1;
+  width: 100%;
+  margin-left: 15px;
+  margin-right: 10px;
+  transition: opacity 100ms, width 100ms, margin-left 100ms, margin-right 100ms;
+  transition-timing-function: ease-in;
+}

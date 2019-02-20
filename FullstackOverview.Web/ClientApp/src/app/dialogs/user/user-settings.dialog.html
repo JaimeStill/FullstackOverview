@@ -1,0 +1,58 @@
+<div class="mat-typography">
+  <h2 mat-dialog-title>Preferences</h2>
+  <mat-dialog-content>
+    <ng-container *ngIf="themer.themes$ | async as themes else loading">
+      <ng-container *ngIf="sidepanel.states$ | async as states else loading">
+        <section fxLayout="column"
+                 fxLayoutAlign="start stretch"
+                 class="container">
+          <p class="color warn"
+             *ngIf="!(validUsername)">This username is already taken!</p>
+          <p *ngIf="validUsername">This username is available!</p>
+          <section fxLayout="row"
+                   fxLayoutAlign="start center">
+            <mat-form-field fxFlex>
+              <input matInput
+                     placeholder="Username"
+                     [(ngModel)]="user.username"
+                     #userInput />
+            </mat-form-field>
+            <mat-icon color="primary"
+                      *ngIf="validUsername">check_circle_outline</mat-icon>
+            <mat-icon color="warn"
+                      *ngIf="!(validUsername)">error_outline</mat-icon>
+          </section>
+          <mat-form-field>
+            <mat-select placeholder="Theme"
+                        [(ngModel)]="user.theme"
+                        (selectionChange)="toggleTheme($event, themes)">
+              <mat-option *ngFor="let t of themes"
+                          [value]="t.name">{{t.display}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Sidepanel"
+                        [(ngModel)]="user.sidepanel"
+                        (selectionChange)="toggleSidepanel($event)">
+              <mat-option *ngFor="let s of states"
+                          [value]="s">{{s}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </section>
+      </ng-container>
+    </ng-container>
+    <ng-template #loading>
+      <mat-progress-bar mode="indeterminate"
+                        color="accent"></mat-progress-bar>
+    </ng-template>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button
+            (click)="updateUser()"
+            color="primary"
+            [disabled]="!(validUsername)">Save</button>
+    <button mat-button
+            mat-dialog-close
+            color="warn">Cancel</button>
+  </mat-dialog-actions>
+</div>

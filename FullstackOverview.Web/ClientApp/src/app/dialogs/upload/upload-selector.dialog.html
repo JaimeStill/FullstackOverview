@@ -1,0 +1,91 @@
+<div class="mat-typography">
+  <h2 mat-dialog-title>Uploads</h2>
+  <mat-dialog-content>
+    <ng-template #loading>
+      <mat-progress-bar mode="indeterminate"
+                        color="accent"></mat-progress-bar>
+    </ng-template>
+    <ng-container *ngIf="upload.uploads$ | async as uploads else loading">
+      <section fxLayout="row"
+               fxLayoutAlign="start center"
+               fxLayoutGap="8px"
+               [style.margin-top.px]="24">
+        <section fxLayout="row"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="4px"
+                 fxFlex>
+          <file-upload (selected)="fileChange($event)"
+                       accept="image/*"></file-upload>
+          <button mat-button
+                  color="primary"
+                  (click)="uploadFiles()"
+                  *ngIf="formData"
+                  [disabled]="uploading">Upload</button>
+          <button mat-button
+                  (click)="clearFiles()"
+                  *ngIf="formData"
+                  [disabled]="uploading">Cancel</button>
+        </section>
+        <span>Image Size: </span>
+        <mat-slider [value]="imgSize"
+                    (input)="setImageSize($event)"
+                    min="200"
+                    max="500"
+                    step="20"
+                    thumbLabel
+                    tickInterval="2"
+                    [style.width.px]="240"></mat-slider>
+      </section>
+      <mat-progress-bar *ngIf="uploading"
+                        mode="indeterminate"
+                        color="accent"></mat-progress-bar>
+      <ng-container *ngIf="formData && files">
+        <mat-toolbar>Pending Uploads</mat-toolbar>
+        <section fxLayout="row | wrap"
+                 fxLayoutAlign="start start"
+                 class="container">
+          <p class="background card elevated arrow"
+             [style.padding.px]="8"
+             *ngFor="let f of files">{{f.name}}</p>
+        </section>
+      </ng-container>
+      <mat-toolbar>Search</mat-toolbar>
+      <section fxLayout="column"
+               fxLayoutAlign="start stretch">
+        <mat-form-field>
+          <input matInput
+                 #uploadSearch />
+        </mat-form-field>
+        <ng-container *ngIf="upload.search$ | async as results">
+          <section *ngIf="results.length > 0"
+                   fxLayout="row | wrap"
+                   fxLayoutAlign="start start"
+                   class="contaienr">
+            <upload-card *ngFor="let r of results"
+                         [upload]="r"
+                         (delete)="deleteUpload($event)"
+                         (select)="selectUpload($event)"
+                         [height]="imgSize"></upload-card>
+          </section>
+          <h3 *ngIf="!(results.length > 0)">No Uploads Found</h3>
+        </ng-container>
+      </section>
+      <mat-toolbar>{{user?.username}}'s Uploads</mat-toolbar>
+      <section *ngIf="uploads.length > 0"
+               fxLayout="row | wrap"
+               fxLayoutAlign="start start"
+               class="container">
+        <upload-card *ngFor="let u of uploads"
+                     [upload]="u"
+                     (delete)="deleteUpload($event)"
+                     (select)="selectUpload($event)"
+                     [height]="imgSize"></upload-card>
+      </section>
+    </ng-container>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button
+            color="warn"
+            mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</div>

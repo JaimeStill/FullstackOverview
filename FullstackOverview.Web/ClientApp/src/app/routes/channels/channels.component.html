@@ -1,0 +1,34 @@
+<ng-container *ngIf="channelService.channels$ | async as channels else loading">
+  <ng-container *ngIf="identity.identity$ | async as auth else loading">
+    <mat-toolbar>
+      <span>Channels</span>
+      <button mat-icon-button
+              (click)="addChannel(auth.user.id)"
+              matTooltip="Add Channel">
+        <mat-icon>add_circle_outline</mat-icon>
+      </button>
+    </mat-toolbar>
+    <section fxLayout="column"
+             fxLayoutAlign="start stretch"
+             class="container">
+      <mat-form-field>
+        <input matInput
+               placeholder="Search"
+               #channelSearch />
+      </mat-form-field>
+    </section>
+    <section *ngIf="channels.length > 0"
+             fxLayout="row | wrap"
+             fxLayoutAlign="start start"
+             class="container">
+      <channel-card *ngFor="let c of channels"
+                    [channel]="c"
+                    (view)="viewChannel($event)"></channel-card>
+    </section>
+    <h3 *ngIf="!(channels.length > 0)">No Channels Available!</h3>
+  </ng-container>
+</ng-container>
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate"
+                    color="accent"></mat-progress-bar>
+</ng-template>

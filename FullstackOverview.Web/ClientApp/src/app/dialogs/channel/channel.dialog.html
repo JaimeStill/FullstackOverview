@@ -1,0 +1,48 @@
+<div class="mat-typography">
+  <h2 mat-dialog-title>
+    <span *ngIf="channel.id > 0">Edit Channel</span>
+    <span *ngIf="!(channel.id > 0)">New Channel</span>
+  </h2>
+  <mat-dialog-content>
+    <section fxLayout="column"
+             fxLayoutAlign="start stretch"
+             class="container">
+      <p class="color warn"
+         *ngIf="!(validChannelName)">This channel name is already taken!</p>
+      <p *ngIf="validChannelName">This channel name is available!</p>
+      <section fxLayout="row"
+               fxLayoutAlign="start center">
+        <mat-form-field fxFlex>
+          <input matInput
+                 placeholder="Channel Name"
+                 [(ngModel)]="channel.name"
+                 #channelInput />
+        </mat-form-field>
+        <mat-icon color="primary"
+                  *ngIf="validChannelName">check_circle_outline</mat-icon>
+        <mat-icon color="warn"
+                  *ngIf="!(validChannelName)">error_outline</mat-icon>
+      </section>
+      <mat-form-field>
+        <input matInput
+               placeholder="Channel Description"
+               [(ngModel)]="channel.description" />
+      </mat-form-field>
+    </section>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button
+            *ngIf="channel.id > 0"
+            (click)="updateChannel()"
+            color="primary"
+            [disabled]="!(validChannelName)">Save</button>
+    <button mat-button
+            *ngIf="!(channel.id > 0)"
+            (click)="addChannel()"
+            color="primary"
+            [disabled]="!(validChannelName)">Save</button>
+    <button mat-button
+            mat-dialog-close
+            color="warn">Cancel</button>
+  </mat-dialog-actions>
+</div>
