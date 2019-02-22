@@ -28,7 +28,7 @@ namespace FullstackOverview.Web.Hubs
             {
                 await groups.RemoveFromSocketGroup(Context.ConnectionId, c);
                 await Groups.RemoveFromGroupAsync(Context.ConnectionId, c);
-                await Clients.GroupExcept(c, Context.ConnectionId).SendAsync("groupAlert", $"{Context.UserIdentifier} has left {c}");
+                await Clients.GroupExcept(c, Context.ConnectionId).SendAsync("channelAlert", $"{Context.UserIdentifier} has left {c}");
             }
 
             await base.OnDisconnectedAsync(ex);
